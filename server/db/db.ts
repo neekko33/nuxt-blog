@@ -1,5 +1,3 @@
-import { drizzle } from 'drizzle-orm/node-postgres'
-import * as schema from './schema'
-import 'dotenv/config'
+import { PrismaClient } from '@prisma/client'
 
-export const db = drizzle(process.env.DATABASE_URL!, { schema })
+export const prisma = new PrismaClient()

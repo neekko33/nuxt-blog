@@ -1,6 +1,5 @@
-import { db } from './db'
-import { usersTable, categoriesTable, tagsTable, postsTable, postsTagsTable } from './schema'
-import bcrypt from 'bcryptjs'
+import { prisma } from './db'
+import bcryptjs from 'bcryptjs'
 import 'dotenv/config'
 import { faker } from '@faker-js/faker'
 
@@ -9,23 +8,20 @@ async function main() {
   const name = process.env.ADMIN_NAME
   const password = process.env.ADMIN_PASSWORD || 'password'
 
-  const hashedPassword = await bcrypt.hash(password, 10)
+  const hashedPassword = await bcryptjs.hash(password, 10)
 
-  const user = await db
-    .insert(usersTable)
-    .values({
+  const user = await prisma.user.create({
+    data: {
       name: name!,
       email: email!,
       password: hashedPassword,
       bio: faker.lorem.sentence(),
-      avatar_url: faker.image.avatar(),
-    })
-    .returning({ id: usersTable.id })
+      avatar: faker.image.avatar(),
+    },
+  })
 
   console.log('✅ Admin user created:')
   console.log(`   Email: ${email}`)
-
-  const user = await db.query.usersTable.findFirst()
 
   if (!user) {
     console.error('❌ No user found. Please create an admin user first.')
@@ -34,43 +30,53 @@ async function main() {
 
   console.log('🌱 Seeding categories...')
   const categoryNames = ['技术', '生活', '随笔', '教程', '其他']
-  const categories = await db
-    .insert(categoriesTable)
-    .values(categoryNames.map(name => ({ name })))
-    .returning()
+
+  // createMany 不返回创建的记录，需要分别创建或之后查询
+  await prisma.category.createMany({
+    data: categoryNames.map(name => ({ name })),
+  })
+
+  // 查询刚创建的 categories
+  const categories = await prisma.category.findMany()
 
   console.log('🌱 Seeding tags...')
-  const tags = await db
-    .insert(tagsTable)
-    .values(Array.from({ length: 10 }, () => ({ name: faker.lorem.word() })))
-    .returning()
+  await prisma.tag.createMany({
+    data: Array.from({ length: 10 }, () => ({ name: faker.lorem.word() })),
+  })
+
+  // 查询刚创建的 tags
+  const tags = await prisma.tag.findMany()
 
   console.log('🌱 Seeding posts...')
-  const posts = await db
-    .insert(postsTable)
-    .values(
-      Array.from({ length: 30 }, () => ({
-        title: faker.lorem.sentence(),
-        description: faker.lorem.paragraph(),
-        content: faker.lorem.paragraphs(3),
-        user_id: user.id,
-        category_id: categories[Math.floor(Math.random() * categories.length)].id,
-      }))
-    )
-    .returning()
+  await prisma.post.createMany({
+    data: Array.from({ length: 30 }, () => ({
+      title: faker.lorem.sentence(),
+      content: faker.lorem.paragraphs(10),
+      authorId: user.id,
+      categoryId: categories[Math.floor(Math.random() * categories.length)].id,
+    })),
+  })
+
+  // 查询刚创建的 posts
+  const posts = await prisma.post.findMany()
 
   console.log('🌱 Seeding posts-tags relations...')
-  await db.insert(postsTagsTable).values(
-    Array.from({ length: 50 }, () => ({
-      post_id: posts[Math.floor(Math.random() * posts.length)].id,
-      tag_id: tags[Math.floor(Math.random() * tags.length)].id,
-    }))
-  )
+  await prisma.postTag.createMany({
+    data: Array.from({ length: 50 }, () => ({
+      postId: posts[Math.floor(Math.random() * posts.length)].id,
+      tagId: tags[Math.floor(Math.random() * tags.length)].id,
+    })),
+    skipDuplicates: true, // 避免重复的关联关系报错
+  })
 
   console.log('✅ Fake data inserted successfully!')
 }
 
-main().catch(err => {
-  console.error('❌ Error:', err)
-  process.exit(1)
-})
+main()
+  .catch(err => {
+    console.error('❌ Error:', err)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })

@@ -27,17 +27,5 @@
       <NuxtLink to="/" class="text-xl font-bold">Neekko33's Blog</NuxtLink>
     </template>
     <UNavigationMenu :items="items" />
-    <template #right>
-      <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          to="https://github.com/nuxt/ui"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-        />
-      </UTooltip>
-    </template>
   </UHeader>
 </template>
