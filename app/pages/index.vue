@@ -1,3 +1,13 @@
+<script setup lang="ts"></script>
 <template>
-  <h1>Hello World</h1>
+  <div class="pt-6 flex space-x-6">
+    <div class="w-[350px] space-y-4">
+      <AuthorInfo />
+      <CategoriesCard />
+      <TagsCard />
+    </div>
+    <div class="flex-1">
+      <ArticlesList />
+    </div>
+  </div>
 </template>

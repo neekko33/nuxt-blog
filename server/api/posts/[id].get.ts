@@ -1,7 +1,8 @@
 import { eq } from 'drizzle-orm'
 import { db } from '~~/server/db/db'
+import { postsTable } from '~~/server/db/schema'
 export default defineEventHandler(async event => {
-  const { id } = getQuery(event)
+  const id = event.context.params?.id
 
   if (!id) {
     return createError({
