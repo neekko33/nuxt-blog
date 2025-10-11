@@ -2,9 +2,11 @@
   import { zh_cn } from '@nuxt/ui/locale'
   const route = useRoute()
   const layoutName = computed(() => {
-    return route.path.startsWith('/panel') && !route.path.includes('login')
-      ? 'admin'
-      : 'default'
+    if (route.path === '/panel/login') {
+      return ''
+    }
+
+    return route.path.startsWith('/panel') ? 'admin' : 'blog'
   })
 </script>
 <template>

@@ -27,15 +27,15 @@
           class="flex items-center justify-center space-x-6 my-6 text-gray-500 text-sm"
         >
           <div class="inline-flex items-center space-x-1">
-            <Icon name="heroicons:calendar-date-range-16-solid" size="16" />
+            <Icon name="i-lucide-calendar-days" size="16" />
             <span>{{ new Date(post.createdAt).toLocaleDateString() }} </span>
           </div>
           <div class="inline-flex items-center space-x-1">
-            <Icon name="heroicons:archive-box-solid" size="16" />
+            <Icon name="i-lucide-archive" size="16" />
             <span>{{ post.category }}</span>
           </div>
           <div class="inline-flex items-center space-x-1">
-            <Icon name="heroicons:user-16-solid" size="16" />
+            <Icon name="i-lucide-cat" size="16" />
             <span>Neekko33</span>
           </div>
         </div>
