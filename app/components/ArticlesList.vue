@@ -1,23 +1,36 @@
 <script setup lang="ts">
-  const posts = ref<Post[]>([])
-  const total = ref(0)
   const page = ref(1)
-  const { data } = await useFetch('/api/posts', {
+  const pageSize = ref(10)
+
+  const { data, refresh } = await useFetch('/api/posts', {
     query: {
-      page: 1,
-      pageSize: 10,
+      pageNum: page,
+      pageSize: pageSize,
       category: '',
       tag: '',
     },
+    watch: [page]
   })
-  posts.value = data.value?.data || []
-  total.value = data.value?.total || 0
+
+  const posts = computed(() => data.value?.data || [])
+  const total = computed(() => data.value?.total || 0)
+
+  const onPageChange = () => {
+    refresh()
+    scrollTo({ top: 0, behavior: 'smooth' })
+  }
 </script>
 <template>
   <div>
     <template v-for="post in posts" :key="post.id">
       <ArticleCard :post="post" class="mb-6" />
     </template>
-    <UPagination v-model:page="page" :total="total" class="flex items-center justify-center" active-color="neutral" />
+    <UPagination
+      v-model:page="page"
+      :total="total"
+      class="flex items-center justify-center"
+      active-color="neutral"
+      @update:page="onPageChange"
+    />
   </div>
 </template>

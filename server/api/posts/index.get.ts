@@ -50,7 +50,7 @@ export default defineEventHandler(async event => {
   const postsFormatted: Post[] = posts.map(post => ({
     id: post.id,
     title: post.title,
-    content: post.content,
+    content: post.content as string,
     createdAt: post.createdAt,
     category: post.category.name,
     tags: post.tags.map(pt => pt.tag.name),

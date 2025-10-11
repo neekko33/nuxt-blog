@@ -4,8 +4,8 @@ export type Post = {
   content?: string
   createdAt: Date
   updatedAt?: Date
-  tags: Tag[]
-  category?: Category
+  tags: string[]
+  category?: string
 }
 
 export type Tag = {
