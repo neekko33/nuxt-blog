@@ -1,10 +1,13 @@
-import { eq } from "drizzle-orm"
-
+import { prisma } from "~~/server/db/db"
 export default defineEventHandler(async (event) => {
   const id = getIdParam(event)
 
   try {
-    await db.delete(postsTable).where(eq(postsTable.id, Number(id)))
+    await prisma.post.delete({
+      where: {
+        id: Number(id)
+      }
+    })
   } catch {
     return createError({
       statusCode: 500,

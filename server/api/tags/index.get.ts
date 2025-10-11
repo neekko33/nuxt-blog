@@ -1,16 +1,14 @@
-import { db } from '~~/server/db/db'
-import { tagsTable } from '~~/server/db/schema'
-import { desc } from 'drizzle-orm'
+import { prisma } from '~~/server/db/db'
 export default defineEventHandler(async event => {
   const { pageNum = '1', pageSize = '10' } = getQuery(event)
-
-  const tags = await db.query.tagsTable.findMany({
-    orderBy: [desc(tagsTable.created_at)],
-    limit: Number(pageSize),
-    offset: (Number(pageNum) - 1) * Number(pageSize),
+  
+  const tags = await prisma.tag.findMany({
+    orderBy: { updatedAt: 'desc' },
+    take: Number(pageSize),
+    skip: (Number(pageNum) - 1) * Number(pageSize),
   })
 
-  const total = await db.$count(tagsTable)
+  const total = await prisma.tag.count()
 
   return {
     data: tags,

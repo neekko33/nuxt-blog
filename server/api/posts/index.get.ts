@@ -1,73 +1,55 @@
-import { db } from '~~/server/db/db'
-import { postsTable } from '~~/server/db/schema'
-import { eq, and, desc } from 'drizzle-orm'
+import { prisma } from '~~/server/db/db'
 
-async function getTotal(category: string = '', tag: string = '') {
-  const total = await db.$count(
-    postsTable,
-    and(
-      tag
-        ? exists(
-            db
-              .select()
-              .from(postsTagsTable)
-              .where(
-                and(
-                  eq(postsTagsTable.post_id, postsTable.id),
-                  eq(postsTagsTable.tag_id, Number(tag))
-                )
-              )
-          )
-        : undefined,
-      category ? eq(postsTable.category_id, Number(category)) : undefined
-    )
-  )
-
+async function getTotal(categoryId: string = '', tagId: string = '') {
+  const total = await prisma.post.count({
+    where: {
+      categoryId: categoryId ? Number(categoryId) : undefined,
+      tags: {
+        some: {
+          tagId: tagId ? Number(tagId) : undefined
+        }
+      }
+    }
+  })
   return total
 }
 
 export default defineEventHandler(async event => {
-  const { pageNum = '1', pageSize = '10', category = '', tag = '' } = getQuery(event)
+  const {
+    pageNum = '1',
+    pageSize = '10',
+    category = '',
+    tag = '',
+  } = getQuery(event)
 
-  const total = await getTotal(category, tag)
-  const posts = await db.query.postsTable.findMany({
-    where: (postsTable, { exists, and, eq }) =>
-      and(
-        tag
-          ? exists(
-              db
-                .select()
-                .from(postsTagsTable)
-                .where(
-                  and(
-                    eq(postsTagsTable.post_id, postsTable.id),
-                    eq(postsTagsTable.tag_id, Number(tag))
-                  )
-                )
-            )
-          : undefined,
-        category ? eq(postsTable.category_id, Number(category)) : undefined
-      ),
-    with: {
-      category: true,
-      postsTags: {
-        with: {
-          tag: true,
-        },
-      },
+  const total = await getTotal(category as string, tag as string)
+  const posts = await prisma.post.findMany({
+    where: {
+      categoryId: category ? Number(category) : undefined,
+      tags: {
+        some: {
+          tagId: tag ? Number(tag) : undefined
+        }
+      }
     },
-    orderBy: [desc(postsTable.created_at)],
-    limit: pageSize,
-    offset: (pageNum - 1) * pageSize,
+    include: {
+      category: true,
+      tags: true,
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+    skip: (Number(pageNum) - 1) * Number(pageSize),
+    take: Number(pageSize),
   })
 
   const postsFormatted: Post[] = posts.map(post => ({
     id: post.id,
     title: post.title,
-    description: post.description,
-    created_at: post.created_at,
+    content: post.content,
+    createdAt: post.createdAt,
     category: post.category.name,
-    tags: post.postsTags.map(pt => pt.tag),
+    tags: post.tags,
   }))
 
   return {

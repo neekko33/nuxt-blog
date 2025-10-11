@@ -1,11 +1,14 @@
-import { db } from '~~/server/db/db'
-import { postsTable, postsTagsTable } from '~~/server/db/schema'
+import { prisma } from '~~/server/db/db'
 
 export default defineEventHandler(async event => {
-  const { title, description, content, category_id, tag_ids } =
+  const { title, content, categoryId, tagIds } =
     await readValidatedBody(event, body => postSchema.parse(body))
 
-  const user = await db.query.usersTable.findFirst()
+  const user = await prisma.user.findFirst({
+    select: {
+      id: true,
+    },
+  })
 
   if (!user) {
     throw createError({
@@ -16,25 +19,23 @@ export default defineEventHandler(async event => {
   }
 
   try {
-    await db.transaction(async tx => {
-      const [newPost] = await tx
-        .insert(postsTable)
-        .values({
+    await prisma.$transaction(async tx => {
+      const newPost = await tx.post.create({
+        data: {
           title,
-          description,
           content,
-          category_id,
-          user_id: user.id,
-        })
-        .returning()
+          categoryId,
+          authorId: user.id,
+        },
+      })
 
-      if (tag_ids.length > 0) {
-        await tx.insert(postsTagsTable).values(
-          tag_ids.map(tag_id => ({
-            post_id: newPost.id,
-            tag_id,
+      if (tagIds.length) {
+        await tx.postTag.createMany({
+          data: tagIds.map(tagId => ({
+            postId: newPost.id,
+            tagId,
           }))
-        )
+        })
       }
     })
   } catch (e) {
