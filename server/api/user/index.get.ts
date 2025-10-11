@@ -2,7 +2,11 @@ import { prisma } from '~~/server/db/db'
 
 export default defineEventHandler(async () => {
   const user = await prisma.user.findFirst({
-    omit: ['password', 'createdAt', 'updatedAt'],
+    omit: {
+      password: true,
+      createdAt: true,
+      updatedAt: true,
+    }
   })
   const postsCount = await prisma.post.count()
   const categoriesCount = await prisma.category.count()
@@ -10,8 +14,10 @@ export default defineEventHandler(async () => {
 
   return {
     ...user,
-    postsCount,
-    categoriesCount,
-    tagsCount,
+    count: {
+      posts: postsCount,
+      categories: categoriesCount,
+      tags: tagsCount,
+    }
   }
 })

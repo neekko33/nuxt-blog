@@ -34,7 +34,11 @@ export default defineEventHandler(async event => {
     },
     include: {
       category: true,
-      tags: true,
+      tags: {
+        include: {
+          tag: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: 'desc',
@@ -49,7 +53,7 @@ export default defineEventHandler(async event => {
     content: post.content,
     createdAt: post.createdAt,
     category: post.category.name,
-    tags: post.tags,
+    tags: post.tags.map(pt => pt.tag.name),
   }))
 
   return {

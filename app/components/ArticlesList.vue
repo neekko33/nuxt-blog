@@ -18,6 +18,6 @@
     <template v-for="post in posts" :key="post.id">
       <ArticleCard :post="post" class="mb-6" />
     </template>
-    <UPagination v-model:page="page" :total="total" />
+    <UPagination v-model:page="page" :total="total" class="flex items-center justify-center" active-color="neutral" />
   </div>
 </template>
