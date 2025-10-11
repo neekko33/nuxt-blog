@@ -16,7 +16,11 @@ export default defineEventHandler(async event => {
     },
     include: {
       category: true,
-      tags: true,
+      tags: {
+        include: {
+          tag: true,
+        }
+      },
     },
   })
 
@@ -29,7 +33,8 @@ export default defineEventHandler(async event => {
     title: post.title,
     content: post.content,
     createdAt: post.createdAt,
-    tags: post.tags.map(t => t.name),
+    updatedAt: post.updatedAt,
+    tags: post.tags.map(t => t.tag.name),
     category: post.category.name,
   }
 

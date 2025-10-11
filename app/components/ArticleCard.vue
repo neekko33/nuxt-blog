@@ -10,7 +10,7 @@
   <div class="card">
     <div>
       <h2 class="text-xl font-bold mb-8">
-        <NuxtLink :to="`/post/${post.slug}`" class="hover:underline">
+        <NuxtLink :to="`/posts/${post.id}`" class="hover:underline">
           {{ post.title }}
         </NuxtLink>
       </h2>
