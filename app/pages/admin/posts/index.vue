@@ -67,7 +67,7 @@
 </script>
 <template>
   <div class="p-6">
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold mb-4">文章管理</h1>
       <UButton :to="'/admin/posts/create'" class="mb-4" variant="soft" icon="i-lucide-plus">新建文章</UButton>
     </div>

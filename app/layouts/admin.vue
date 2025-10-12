@@ -1,9 +1,9 @@
 <template>
   <UDashboardGroup>
     <AdminSidebar />
-    <UDashboardadmin>
+    <UDashboardPanel>
       <AdminHeader />
       <NuxtPage />
-    </UDashboardadmin>
+    </UDashboardPanel>
   </UDashboardGroup>
 </template>

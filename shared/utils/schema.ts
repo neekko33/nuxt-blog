@@ -5,8 +5,8 @@ export const PostResponseSchema = z.object({
   content: z.string().min(1),
   category: z.string(),
   tags: z.array(z.string()),
-  createdAt: z.string().transform((val) => new Date(val)),
-  updatedAt: z.string().transform((val) => new Date(val)),
+  createdAt: z.string().transform(val => new Date(val)),
+  updatedAt: z.string().transform(val => new Date(val)),
 })
 
 export const PostRequestSchema = z.object({
@@ -23,6 +23,7 @@ export const TagOrCategoryRequestSchema = z.object({
 export const TagOrCategoryResponseSchema = z.object({
   id: z.number().int().positive(),
   name: z.string().min(1).max(100),
-  createdAt: z.string().transform((val) => new Date(val)),
-  updatedAt: z.string().transform((val) => new Date(val)),
+  posts: z.number().int(),
+  createdAt: z.string().transform(val => new Date(val)),
+  updatedAt: z.string().transform(val => new Date(val)),
 })

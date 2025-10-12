@@ -20,7 +20,7 @@ export type Category = {
   name: string
   createdAt: Date
   updatedAt: Date
-  posts?: { id: number }[]
+  posts: number
 }
 
 export type User = {
