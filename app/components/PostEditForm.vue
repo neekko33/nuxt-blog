@@ -79,7 +79,7 @@
 <template>
   <div>
     <div class="mb-8 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">编辑文章</h1>
+      <h1 class="text-2xl font-bold">{{ editPost.id ? '编辑文章' : '新建文章' }}</h1>
       <div>
         <UButton
           to="/panel/posts"
