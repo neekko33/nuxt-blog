@@ -19,28 +19,6 @@
       placeholder: '输入您的密码',
       required: true,
     },
-    {
-      name: 'remember',
-      label: '记住我',
-      type: 'checkbox',
-    },
-  ]
-
-  const providers = [
-    {
-      label: 'Google',
-      icon: 'i-simple-icons-google',
-      onClick: () => {
-        toast.add({ title: 'Google', description: 'Login with Google' })
-      },
-    },
-    {
-      label: 'GitHub',
-      icon: 'i-simple-icons-github',
-      onClick: () => {
-        toast.add({ title: 'GitHub', description: 'Login with GitHub' })
-      },
-    },
   ]
 
   const schema = z.object({
@@ -60,14 +38,20 @@
         body: payload.data,
       })
       await refreshSession()
-      await navigateTo('/admin')
+      toast.add({
+        title: '登录成功',
+        description: '欢迎回来！',
+        color: 'success',
+      })
+      await navigateTo('/admin', {
+        external: true,
+      })
     } catch {
       toast.add({
         title: '登录失败',
         description: '请检查您的凭据并重试。',
-        type: 'error',
+        color: 'error',
       })
-      return
     }
   }
 </script>
@@ -83,7 +67,6 @@
         description="输入您的凭据以访问您的帐户。"
         icon="i-lucide-user"
         :fields="fields"
-        :providers="providers"
         separator="或"
         :submit="{
           label: '登录',
