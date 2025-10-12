@@ -11,11 +11,15 @@ export type Post = {
 export type Tag = {
   id: number
   name: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export type Category = {
   id: number
   name: string
+  createdAt: Date
+  updatedAt: Date
   posts?: { id: number }[]
 }
 

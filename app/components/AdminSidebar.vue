@@ -1,36 +1,31 @@
 <script setup lang="ts">
   import type { NavigationMenuItem } from '@nuxt/ui'
 
-  const route = useRoute()
   const items: NavigationMenuItem[] = [
     {
       label: '仪表盘',
       icon: 'i-lucide-house',
-      active: route.path === '/panel',
-      href: '/panel/dashboard',
+      href: '/panel',
     },
     {
       label: '文章管理',
       icon: 'i-lucide-file-heart',
       href: '/panel/posts',
-      active: route.path === '/panel/posts',
     },
     {
       label: '分类管理',
       icon: 'i-lucide-folder',
       href: '/panel/categories',
-      active: route.path === '/panel/categories',
     },
     {
       label: '标签管理',
       icon: 'i-lucide-tag',
       href: '/panel/tags',
-      active: route.path === '/panel/tags',
     },
     {
       label: '个人设置',
       icon: 'i-lucide-settings',
-      defaultOpen: false,
+      defaultOpen: true,
       children: [
         {
           label: '个人信息',
@@ -42,10 +37,9 @@
     },
   ]
 
-  const user = ref<User>()
   const { user: userSession } = useUserSession()
 
-  user.value = userSession.value
+  const user = computed(() => userSession.value as User | null)
 </script>
 <template>
   <UDashboardSidebar

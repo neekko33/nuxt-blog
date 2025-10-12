@@ -2,7 +2,7 @@
   const page = ref(1)
   const pageSize = ref(10)
 
-  const { data, refresh } = await useFetch('/api/posts', {
+  const { data } = await useFetch('/api/posts', {
     query: {
       pageNum: page,
       pageSize: pageSize,
@@ -12,11 +12,10 @@
     watch: [page]
   })
 
-  const posts = computed(() => data.value?.data || [])
+  const posts = computed(() => PostResponseSchema.array().parse(data.value?.data || []))
   const total = computed(() => data.value?.total || 0)
 
   const onPageChange = () => {
-    refresh()
     scrollTo({ top: 0, behavior: 'smooth' })
   }
 </script>

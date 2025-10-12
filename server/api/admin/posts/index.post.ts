@@ -2,7 +2,7 @@ import { prisma } from '~~/server/db/db'
 
 export default defineEventHandler(async event => {
   const { title, content, categoryId, tagIds } =
-    await readValidatedBody(event, body => postSchema.parse(body))
+    await readValidatedBody(event, body => PostRequestSchema.parse(body))
 
   const user = await prisma.user.findFirst({
     select: {
@@ -29,7 +29,7 @@ export default defineEventHandler(async event => {
         },
       })
 
-      if (tagIds.length) {
+      if (tagIds && tagIds.length) {
         await tx.postTag.createMany({
           data: tagIds.map(tagId => ({
             postId: newPost.id,

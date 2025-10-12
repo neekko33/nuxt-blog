@@ -52,6 +52,7 @@ export default defineEventHandler(async event => {
     title: post.title,
     content: post.content as string,
     createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
     category: post.category.name,
     tags: post.tags.map(pt => pt.tag.name),
   }))

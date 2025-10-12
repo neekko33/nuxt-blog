@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
 
   const { title, content, categoryId, tagIds } = await readValidatedBody(
     event,
-    body => postSchema.parse(body)
+    body => PostRequestSchema.parse(body)
   )
 
   try {
@@ -16,7 +16,7 @@ export default defineEventHandler(async event => {
       await tx.postTag.deleteMany({
         where: { postId: Number(id) },
       })
-      if (tagIds.length > 0) {
+      if (tagIds && tagIds.length > 0) {
         await tx.postTag.createMany({
           data: tagIds.map(tagId => ({
             postId: Number(id),
