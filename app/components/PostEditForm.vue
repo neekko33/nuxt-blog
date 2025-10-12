@@ -67,7 +67,7 @@
         description: '文章保存成功',
         color: 'success',
       })
-      navigateTo('/panel/posts')
+      navigateTo('/admin/posts')
     } catch {
       toast.add({
         description: '保存文章失败，请稍后重试',
@@ -82,7 +82,7 @@
       <h1 class="text-2xl font-bold">{{ editPost.id ? '编辑文章' : '新建文章' }}</h1>
       <div>
         <UButton
-          to="/panel/posts"
+          to="/admin/posts"
           color="neutral"
           variant="subtle"
           class="mr-4"

@@ -60,7 +60,7 @@
         body: payload.data,
       })
       await refreshSession()
-      await navigateTo('/panel')
+      await navigateTo('/admin')
     } catch {
       toast.add({
         title: '登录失败',

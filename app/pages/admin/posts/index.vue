@@ -69,7 +69,7 @@
   <div class="p-6">
     <div class="flex justify-between items-center">
       <h1 class="text-2xl font-bold mb-4">文章管理</h1>
-      <UButton :to="'/panel/posts/create'" class="mb-4" variant="soft" icon="i-lucide-plus">新建文章</UButton>
+      <UButton :to="'/admin/posts/create'" class="mb-4" variant="soft" icon="i-lucide-plus">新建文章</UButton>
     </div>
     <UTable :data="posts" :columns="columns" class="flex-1">
       <template #tags-cell="{ row }">
@@ -86,7 +86,7 @@
       </template>
       <template #action-cell="{ row }">
         <div class="flex space-x-2">
-          <UButton :to="`/panel/posts/edit/${row.original.id}`" variant="ghost"
+          <UButton :to="`/admin/posts/edit/${row.original.id}`" variant="ghost"
             >编辑</UButton
           >
           <UModal

@@ -5,22 +5,22 @@
     {
       label: '仪表盘',
       icon: 'i-lucide-house',
-      href: '/panel',
+      href: '/admin',
     },
     {
       label: '文章管理',
       icon: 'i-lucide-file-heart',
-      href: '/panel/posts',
+      href: '/admin/posts',
     },
     {
       label: '分类管理',
       icon: 'i-lucide-folder',
-      href: '/panel/categories',
+      href: '/admin/categories',
     },
     {
       label: '标签管理',
       icon: 'i-lucide-tag',
-      href: '/panel/tags',
+      href: '/admin/tags',
     },
     {
       label: '个人设置',
