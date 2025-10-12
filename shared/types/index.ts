@@ -11,6 +11,7 @@ export type Post = {
 export type Tag = {
   id: number
   name: string
+  posts: number
   createdAt: Date
   updatedAt: Date
 }
