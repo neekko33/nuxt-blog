@@ -1,4 +1,4 @@
-import { prisma } from '~~/server/db/db'
+import prisma from '~~/lib/prisma'
 
 export default defineEventHandler(async () => {
   const user = await prisma.user.findFirst({

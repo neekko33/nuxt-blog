@@ -1,4 +1,4 @@
-import { prisma } from '~~/server/db/db'
+import prisma from '~~/lib/prisma'
 export default defineEventHandler(async event => {
   const id = getIdParam(event)
 

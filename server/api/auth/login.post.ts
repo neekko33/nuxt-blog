@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
-import { prisma } from '~~/server/db/db'
+import prisma from '~~/lib/prisma'
 
 const SignInSchema = z.object({
   email: z.email({ message: '请输入有效的邮箱地址' }).trim(),

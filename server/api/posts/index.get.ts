@@ -1,4 +1,4 @@
-import { prisma } from '~~/server/db/db'
+import prisma from '~~/lib/prisma'
 
 async function getTotal(categoryId: string = '', tagId: string = '') {
   const total = await prisma.post.count({

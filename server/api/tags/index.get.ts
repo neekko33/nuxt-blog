@@ -1,4 +1,4 @@
-import { prisma } from '~~/server/db/db'
+import prisma from '~~/lib/prisma'
 export default defineEventHandler(async event => {
   const { pageNum = '1', pageSize = '10' } = getQuery(event)
   
