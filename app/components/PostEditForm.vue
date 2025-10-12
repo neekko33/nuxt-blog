@@ -16,8 +16,8 @@
   })
 
   const [{ data: tagsData }, { data: categoriesData }] = await Promise.all([
-    useFetch('/api/tags'),
-    useFetch('/api/categories'),
+    useFetch('/api/tags', { query: { pageSize: 100 } }),
+    useFetch('/api/categories', { query: { pageSize: 100 } }),
   ])
 
   const tags = computed(() =>
@@ -79,7 +79,9 @@
 <template>
   <div>
     <div class="mb-8 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">{{ editPost.id ? '编辑文章' : '新建文章' }}</h1>
+      <h1 class="text-2xl font-bold">
+        {{ editPost.id ? '编辑文章' : '新建文章' }}
+      </h1>
       <div>
         <UButton
           to="/admin/posts"
