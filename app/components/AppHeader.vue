@@ -9,11 +9,11 @@
       to: '/',
       active: route.path === '/',
     },
-    {
-      label: '关于',
-      to: '/about',
-      active: route.path === '/about',
-    },
+    // {
+    //   label: '关于',
+    //   to: '/about',
+    //   active: route.path === '/about',
+    // },
   ])
 </script>
 <template>
