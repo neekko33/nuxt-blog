@@ -4,7 +4,7 @@
   const pageSize = ref(10)
   const { category } = useRoute().query
 
-  const { data } = await useFetch('/api/posts', {
+  const { data, pending } = await useFetch('/api/posts', {
     query: {
       pageNum: page,
       pageSize: pageSize,
@@ -12,6 +12,7 @@
       tag: '',
     },
     watch: [page],
+    lazy: true,
   })
 
   const posts = computed(() =>
@@ -43,16 +44,23 @@
         @click="handleClearFilter"
       />
     </div>
-    <template v-for="post in posts" :key="post.id">
-      <ArticleCard :post="post" class="mb-6" />
+    <!-- Loading 状态 -->
+    <div v-if="pending" class="space-y-6">
+      <USkeleton v-for="i in 9" :key="i" class="h-32 w-full" />
+    </div>
+
+    <template v-else>
+      <template v-for="post in posts" :key="post.id">
+        <ArticleCard :post="post" class="mb-6" />
+      </template>
+      <UPagination
+        v-if="total > pageSize"
+        v-model:page="page"
+        :total="total"
+        class="flex items-center justify-center"
+        active-color="neutral"
+        @update:page="onPageChange"
+      />
     </template>
-    <UPagination
-      v-if="total > pageSize"
-      v-model:page="page"
-      :total="total"
-      class="flex items-center justify-center"
-      active-color="neutral"
-      @update:page="onPageChange"
-    />
   </div>
 </template>
