@@ -11,16 +11,16 @@
   }
 </script>
 <template>
-  <div class="card cursor-pointer space-y-8" @click="handleClick">
+  <div class="card cursor-pointer space-y-4" @click="handleClick">
     <div>
-      <h3 class="text-sm text-center text-gray-500 mb-4">
+      <h3 class="text-sm text-gray-400 mb-4 font-semibold">
         {{ formatDate(post.createdAt) }}
       </h3>
-      <h2 class="text-2xl font-bold text-center">
+      <h2 class="text-xl font-bold">
         {{ post.title }}
       </h2>
     </div>
-    <div class="flex items-center justify-center">
+    <div>
       <div class="text-sm text-gray-500 space-x-4 flex">
         <div class="inline-flex items-center space-x-1">
           <Icon name="i-lucide-archive" size="16" />
@@ -40,11 +40,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="mt-8 text-center">
-      <UButton color="neutral" variant="outline" class="rounded-3xl px-4"
-        >阅读更多</UButton
-      >
     </div>
   </div>
 </template>
