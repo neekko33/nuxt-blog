@@ -1,5 +1,6 @@
 import type { H3Event, EventHandlerRequest } from 'h3'
 import { createError } from 'h3'
+import dayjs from 'dayjs'
 
 export const getIdParam = (event: H3Event<EventHandlerRequest>) => {
   const id = event.context.params?.id
@@ -15,3 +16,6 @@ export const getIdParam = (event: H3Event<EventHandlerRequest>) => {
   return id
 }
 
+export const formatDate = (date: Date) => {
+  return dayjs(date).locale('zh-cn').format('YYYY-MM-DD')
+}

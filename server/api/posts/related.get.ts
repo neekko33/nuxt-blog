@@ -38,7 +38,7 @@ export default defineEventHandler(async event => {
     return {
       id: post.id,
       title: post.title,
-      date: post.createdAt,
+      createdAt: post.createdAt,
     }
   })
 })

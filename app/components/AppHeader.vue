@@ -17,9 +17,9 @@
   ])
 </script>
 <template>
-  <UHeader>
+  <UHeader style="z-index: 10001">
     <template #title>
-      <NuxtLink to="/" class="text-xl font-bold">Neekko33's Blog</NuxtLink>
+      <h1 class="text-xl font-bold">Neekko33's Blog</h1>
     </template>
     <UNavigationMenu :items="items" color="neutral" />
     <template #right>

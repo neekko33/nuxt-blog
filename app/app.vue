@@ -10,11 +10,9 @@
   })
 </script>
 <template>
-  <div>
-    <UApp :locale="zh_cn">
-      <NuxtLayout :name="layoutName">
-        <NuxtPage />
-      </NuxtLayout>
-    </UApp>
-  </div>
+  <UApp :locale="zh_cn">
+    <NuxtLayout :name="layoutName">
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
 </template>

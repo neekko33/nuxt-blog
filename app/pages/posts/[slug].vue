@@ -1,11 +1,10 @@
 <script setup lang="ts">
-  import { MdPreview, MdCatalog } from 'md-editor-v3'
+  import { MdPreview } from 'md-editor-v3'
   import 'md-editor-v3/lib/preview.css'
 
   const post = ref<Post>()
   const text = ref()
   const id = 'preview-only'
-  const scrollElement = 'body'
 
   const slug = useRoute().params.slug as string
   const { data } = await useFetch(`/api/posts/${slug}`)
@@ -21,14 +20,17 @@
 <template>
   <UPage>
     <UPageBody>
-      <div class="bg-white shadow rounded-lg lg:py-12 py-6 lg:px-16 px-6">
+      <div
+        v-if="post"
+        class="bg-white shadow rounded-lg lg:py-12 py-6 lg:px-16 px-6"
+      >
         <h1 class="text-3xl font-bold text-center">{{ post.title }}</h1>
         <div
           class="flex items-center justify-center space-x-6 my-6 text-gray-500 text-sm"
         >
           <div class="inline-flex items-center space-x-1">
             <Icon name="i-lucide-calendar-days" size="16" />
-            <span>{{ new Date(post.createdAt).toLocaleDateString() }} </span>
+            <span>{{ formatDate(post.createdAt) }} </span>
           </div>
           <div class="inline-flex items-center space-x-1">
             <Icon name="i-lucide-archive" size="16" />
@@ -39,8 +41,7 @@
             <span>Neekko33</span>
           </div>
         </div>
-        <MdPreview :id="id" :model-value="text" />
-        <MdCatalog :editor-id="id" :scroll-element="scrollElement" />
+        <MdPreview :id="id" :model-value="text" preview-theme="vuepress" />
 
         <div class="mt-6">
           <UBadge
@@ -56,14 +57,14 @@
 
         <USeparator class="my-8" label="相关文章" />
 
-        <div>
+        <div v-if="relatedPosts?.length">
           <UBlogPosts orientation="horizontal">
             <UBlogPost
               v-for="relatedPost in relatedPosts"
-              :key="relatedPost.slug"
+              :key="relatedPost.id"
               :to="`/posts/${relatedPost.id}`"
               :title="relatedPost.title"
-              :date="relatedPost.date"
+              :date="relatedPost.createdAt"
             />
           </UBlogPosts>
         </div>
