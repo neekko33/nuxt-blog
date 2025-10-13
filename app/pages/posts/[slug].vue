@@ -20,29 +20,14 @@
 <template>
   <UPage>
     <UPageBody>
-      <div
-        v-if="post"
-        class="bg-white shadow rounded-lg lg:py-12 py-6 lg:px-16 px-6"
-      >
-        <h1 class="text-3xl font-bold text-center">{{ post.title }}</h1>
-        <div
-          class="flex items-center justify-center space-x-6 my-6 text-gray-500 text-sm"
-        >
-          <div class="inline-flex items-center space-x-1">
-            <Icon name="i-lucide-calendar-days" size="16" />
-            <span>{{ formatDate(post.createdAt) }} </span>
-          </div>
-          <div class="inline-flex items-center space-x-1">
-            <Icon name="i-lucide-archive" size="16" />
-            <span>{{ post.category }}</span>
-          </div>
-          <div class="inline-flex items-center space-x-1">
-            <Icon name="i-lucide-cat" size="16" />
-            <span>Neekko33</span>
-          </div>
+      <div v-if="post">
+        <div class="mb-8">
+          <h3 class="text-center mb-6 text-gray-400 font-semibold">
+            {{ formatDate(post.createdAt) }}
+          </h3>
+          <h1 class="text-4xl font-bold text-center">{{ post.title }}</h1>
         </div>
-        <MdPreview :id="id" :model-value="text" preview-theme="vuepress" />
-
+        <MdPreview :id="id" :model-value="text" preview-theme="github" />
         <div class="mt-6">
           <UBadge
             v-for="tag in post.tags"
@@ -65,6 +50,7 @@
               :to="`/posts/${relatedPost.id}`"
               :title="relatedPost.title"
               :date="relatedPost.createdAt"
+              :ui="{ title: 'text-lg' }"
             />
           </UBlogPosts>
         </div>

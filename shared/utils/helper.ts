@@ -17,5 +17,5 @@ export const getIdParam = (event: H3Event<EventHandlerRequest>) => {
 }
 
 export const formatDate = (date: Date) => {
-  return dayjs(date).locale('zh-cn').format('YYYY-MM-DD')
+  return dayjs(date).locale('zh-cn').format('YYYY年MM月DD日')
 }

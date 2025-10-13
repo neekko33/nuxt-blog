@@ -6,15 +6,10 @@
   provide('categories', categories)
 </script>
 <template>
-  <UPage :ui="{ left: 'lg:col-span-3', center: 'lg:col-span-7' }">
-    <template #left>
-      <UPageAside :ui="{ container: 'relative space-y-6' }">
-        <AuthorInfo />
-        <CategoriesCard />
-      </UPageAside>
-    </template>
+  <UPage>
     <template #default>
       <UPageBody>
+        <AuthorInfo />
         <ArticlesList />
       </UPageBody>
     </template>

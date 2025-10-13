@@ -51,7 +51,7 @@
 
     <template v-else>
       <template v-for="post in posts" :key="post.id">
-        <ArticleCard :post="post" class="mb-6" />
+        <ArticleCard :post="post" class="mb-8" />
       </template>
       <UPagination
         v-if="total > pageSize"
