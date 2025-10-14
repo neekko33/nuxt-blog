@@ -35,6 +35,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
     "@flydotio/dockerfile": "^0.7.10",
+    "@iconify-json/lucide": "^1.2.69",
     "prisma": "6.17.1",
     "tsx": "^4.20.6"
   }

@@ -25,16 +25,7 @@
     {
       label: '个人设置',
       icon: 'i-lucide-settings',
-      defaultOpen: true,
-      children: [
-        {
-          label: '个人信息',
-        },
-        {
-          label: '密码修改',
-        },
-      ],
-    },
+      href: '/admin/settings', },
   ]
 
   const { user: userSession } = useUserSession()
