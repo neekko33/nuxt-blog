@@ -4,6 +4,17 @@
     TagOrCategoryResponseSchema.array().parse(data.value?.data || [])
   )
   provide('categories', categories)
+
+  useHead({
+    title: "Neekko33's Blog",
+    meta: [
+      {
+        name: 'description',
+        content: "Neekko33's personal blog",
+      },
+    ],
+  })
+
 </script>
 <template>
   <UPage>

@@ -16,6 +16,16 @@
     params: { slug: slug },
   })
   relatedPosts.value = relatedData.value
+
+  useHead({
+    title: post.value?.title || "Neekko33's Blog",
+    meta: [
+      {
+        name: 'description',
+        content: post.value?.title || "Neekko33's personal blog",
+      },
+    ],
+  })
 </script>
 <template>
   <UPage>

@@ -54,6 +54,16 @@
       })
     }
   }
+
+  useHead({
+    title: 'Admin Login - Neekko33\'s Blog',
+    meta: [
+      {
+        name: 'description',
+        content: 'Admin login page for Neekko33\'s personal blog',
+      },
+    ],
+  })
 </script>
 
 <template>
