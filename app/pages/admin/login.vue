@@ -43,7 +43,7 @@
         description: '欢迎回来！',
         color: 'success',
       })
-      await navigateTo('/admin', {
+      await navigateTo('/admin/posts', {
         external: true,
       })
     } catch {

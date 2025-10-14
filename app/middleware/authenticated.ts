@@ -1,9 +1,9 @@
 export default defineNuxtRouteMiddleware((to) => {
   const { loggedIn } = useUserSession()
 
-  if (to.path === '/admin/login') {
+  if (to.path === '/admin/login' || to.path === '/admin') {
     if (loggedIn.value) {
-      return navigateTo('/admin')
+      return navigateTo('/admin/posts')
     }
     return // 允许访问登录页
   }

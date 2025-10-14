@@ -3,11 +3,6 @@
 
   const items: NavigationMenuItem[] = [
     {
-      label: '仪表盘',
-      icon: 'i-lucide-house',
-      href: '/admin',
-    },
-    {
       label: '文章管理',
       icon: 'i-lucide-file-heart',
       href: '/admin/posts',
